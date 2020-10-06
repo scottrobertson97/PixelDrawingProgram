@@ -18,15 +18,6 @@ int sheetIndex = 0;
 void setup() {
   size(640, 480);
   background(255);
-  
-  drawColor = colors[colorIndex];  
-  
-  strokeWeight(3);
-  
-  //for (int i = 0; i < 65536; i++){
-  //  sheet[i] = colors[(i % 256)/16];
-  //}
-  
   loadSheet();
 }
 
@@ -207,8 +198,17 @@ void saveSheet() {
 
 void loadSheet() {
   img = loadImage("test.png");
-  img.loadPixels();
-  for (int i = 0; i < img.pixels.length; i++){
-    sheet[i] = img.pixels[i];
-  }
+  if(img != null){
+    img.loadPixels();
+    for (int i = 0; i < img.pixels.length; i++){
+      sheet[i] = img.pixels[i];
+    }
+  } else {
+    drawColor = colors[colorIndex];   
+    strokeWeight(3);  
+    for (int i = 0; i < 65536; i++){
+      sheet[i] = colors[(i % 256)/16];
+    }
+    saveSheet();
+  }  
 }
